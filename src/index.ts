@@ -108,6 +108,24 @@ server.tool(
   }
 );
 
+server.tool(
+  "create_transaction",
+  monarch.CreateTransactionSchema.shape,
+  async (request: any) => {
+    const result = await monarch.mcpCreateTransaction(request);
+    return { content: [{ type: "text", text: JSON.stringify(result) }] };
+  }
+);
+
+server.tool(
+  "get_transaction_categories",
+  monarch.GetTransactionCategoriesSchema.shape,
+  async (_request: any) => {
+    const result = await monarch.mcpGetTransactionCategories();
+    return { content: [{ type: "text", text: JSON.stringify(result) }] };
+  }
+);
+
 (async () => {
   try {
       logToFile('[MCP Server Log] Server initialization complete. Ready for connection.');
