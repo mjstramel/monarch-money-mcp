@@ -1,0 +1,19 @@
+{
+  "name": "monarch-money-mcp-server",
+  "version": "0.1.0",
+  "type": "module",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js"
+  },
+  "dependencies": {
+    "monarch-money-api": "^1.0.0",
+    "@modelcontextprotocol/sdk": "^0.1.0",
+    "zod": "^3.22.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.0.0",
+    "@types/node": "^20.0.0"
+  }
+}
