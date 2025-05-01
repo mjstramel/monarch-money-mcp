@@ -5,7 +5,8 @@ import { z } from "zod";
 import {
   getAccounts,
   getBudgets,
-  getTransactions
+  getTransactions,
+  createManualAccount
 } from "monarch-money-api";
 
 // Zod schemas for tool inputs
@@ -36,6 +37,14 @@ export const GetTransactionsSchema = z.object({
   syncedFromInstitution: z.boolean().optional()
 });
 
+export const CreateManualAccountSchema = z.object({
+  accountType: z.string(),
+  accountSubType: z.string(),
+  isInNetWorth: z.boolean(),
+  accountName: z.string(),
+  accountBalance: z.number().optional()
+});
+
 // Wrappers for Monarch Money API
 export async function mcpGetAccounts() {
   return await getAccounts();
@@ -52,4 +61,14 @@ export async function mcpGetBudgets(params: z.infer<typeof GetBudgetsSchema>) {
 
 export async function mcpGetTransactions(params: z.infer<typeof GetTransactionsSchema>) {
   return await getTransactions(params);
+}
+
+export async function mcpCreateManualAccount(params: z.infer<typeof CreateManualAccountSchema>) {
+  return await createManualAccount(
+    params.accountType,
+    params.accountSubType,
+    params.isInNetWorth,
+    params.accountName,
+    params.accountBalance || 0
+  );
 } 

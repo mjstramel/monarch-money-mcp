@@ -3,8 +3,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import { McpServer } from "@modelcontextprotocol/sdk/server/mcp.js";
 import { StdioServerTransport } from "@modelcontextprotocol/sdk/server/stdio.js";
-import { z } from 'zod';
 import * as monarch from './operations/monarch.js';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -93,6 +95,15 @@ server.tool(
   monarch.GetTransactionsSchema.shape,
   async (request: any) => {
     const result = await monarch.mcpGetTransactions(request);
+    return { content: [{ type: "text", text: JSON.stringify(result) }] };
+  }
+);
+
+server.tool(
+  "create_manual_account",
+  monarch.CreateManualAccountSchema.shape,
+  async (request: any) => {
+    const result = await monarch.mcpCreateManualAccount(request);
     return { content: [{ type: "text", text: JSON.stringify(result) }] };
   }
 );
